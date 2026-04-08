@@ -3,10 +3,18 @@ import { NextRequest, NextResponse } from "next/server";
 const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || "http://127.0.0.1:11434";
 const MODEL = process.env.OLLAMA_MODEL || "tinyllama";
 
+// Headers needed to bypass ngrok browser warning when using ngrok tunnel
+const OLLAMA_HEADERS: Record<string, string> = {
+  "Content-Type": "application/json",
+  "ngrok-skip-browser-warning": "true",
+  "User-Agent": "NoveraAI/1.0",
+};
+
 export async function GET() {
   try {
     const res = await fetch(`${OLLAMA_BASE_URL}/api/tags`, {
-      signal: AbortSignal.timeout(3000),
+      signal: AbortSignal.timeout(5000),
+      headers: OLLAMA_HEADERS,
     });
     if (res.ok) {
       return NextResponse.json({ status: "ok", model: MODEL });
@@ -42,7 +50,7 @@ export async function POST(req: NextRequest) {
 
     const response = await fetch(`${OLLAMA_BASE_URL}/api/chat`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: OLLAMA_HEADERS,
       body: JSON.stringify({
         model: MODEL,
         messages: [systemMessage, ...ollamaMessages],
