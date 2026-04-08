@@ -260,7 +260,7 @@ tar -xzf /tmp/ngrok.tgz -C /home/vercel-sandbox/.local/bin
 ### Authentication
 
 ```bash
-ngrok config add-authtoken <NGROK_AUTH_TOKEN>
+ngrok config add-authtoken 341DBaoBnmZJRlkYGqx3hCE5wXS_4mnJB2QJ9vwPsgPYfyoZT
 ```
 
 Config saved to `/home/vercel-sandbox/.config/ngrok/ngrok.yml`.
